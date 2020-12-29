@@ -146,6 +146,9 @@ label {
 .clasificacion {
   direction: rtl;
   unicode-bidi: bidi-override;
+  display: inline-block;
+	font-size: 32px;
+	font-size: 2rem;
 }
 
 label:hover,

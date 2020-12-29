@@ -29,10 +29,10 @@ include('template/header.php');
                         <img src="img\1580987699_917247_1580987870_noticia_normal.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="img\barranquilla-celebra-en-casa-207-años-de-fundacion.jpg" class="d-block w-100" alt="...">
+                        <img src="img\Aleta_de_Junior.jpeg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="img\imagenBarraquilla.jpg" class="d-block w-100" alt="...">
+                        <img src="img\barranquilla.jpg" class="d-block w-100" alt="...">
                     </div>
                 </div>
             </div>
@@ -47,7 +47,6 @@ include('template/header.php');
             </form>
         </div>
     </div>
-
 </main>
 
 
