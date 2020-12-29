@@ -164,3 +164,15 @@ input[type="radio"]:checked ~ label {
 .label-comentario:hover{
   color: black
 }
+
+.encabezado-terminos {
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+
+.espaciado-normas {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+
