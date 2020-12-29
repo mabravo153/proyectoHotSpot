@@ -1,5 +1,5 @@
 <?php
-$connection = mysqli_connect('192.168.25.89', 'root', 'monty1945motita');
+$connection = mysqli_connect('192.168.25.190', 'root', 'monty1945motita');
 if (!$connection) {
     die("No Se Ha Podido Conectar Con El Servidor" . mysqli_error($connection));
 }

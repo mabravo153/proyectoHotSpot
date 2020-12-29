@@ -1,3 +1,21 @@
+
+  let pagina = location.pathname.replace('/proyectoHotspot/',"")
+
+  if (pagina == 'telefono.php') {
+    const consultaInicial = async () => {
+    
+    let consulta = await fetch('backTelefono.php?inicialQuery=yes')
+      console.log(consulta);
+    if(consulta.status == 500){
+      location.href = "http://192.168.25.190/proyectoHotspot/calificacion.php"
+    }
+  }
+  consultaInicial()
+}
+  
+  
+
+
 (function () {
   document.addEventListener("DOMContentLoaded", () => {
     // seccion telefono
@@ -10,12 +28,11 @@
       if (sendPhone.ok) {
         let responsePhone = await sendPhone.json();
 
-        location.href = `http://192.168.25.89/proyectoHotspot/calificacion.php?phone=${phone}`;
+        location.href = `http://192.168.25.190/proyectoHotspot/calificacion.php?phone=${phone}`;
       } else {
         let responseError = await sendPhone.json();
-
-        if ((responseError.code = 404)) {
-          location.href = `http://192.168.25.89/proyectoHotspot/datos.php?phone=${phone}`;
+        if (responseError.code == 404) {
+          location.href = `http://192.168.25.190/proyectoHotspot/datos.php?phone=${phone}`;
         } else {
           alert(responseError.msg);
         }
@@ -48,9 +65,9 @@
       });
 
       if (sendData.ok) {
-        let responseData = await sendData.text();
+        let responseData = await sendData.json();
 
-        console.log(responseData);
+        location.href = responseData.link
       } else {
         let responseData = await sendData.text();
 
@@ -121,7 +138,7 @@
       if (sendPhone.ok) {
         let responsePhone = await sendPhone.json();
 
-        console.log(responsePhone);
+        location.href = responsePhone.link
       } else {
         let responseError = await sendPhone.json();
         alert(responseError.msg);

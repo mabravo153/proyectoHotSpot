@@ -17,23 +17,26 @@ if (isset($_POST['messageFormSurvie'])) {
 
 
     try {
-        $query = "INSERT INTO `calificacion` (fecha, hora, calificacion, comentario, celular, router_id, parque) VALUES (CURDATE(), CURTIME(), '$inputEstrellas', '$inputComentarios', '$inputTelefono', '$router_id', '$parque')";
+        $query = "INSERT INTO `calificacion` (fecha, hora, calificacion, comentario, celular, router_id, parque) VALUES ( CURDATE(), CURTIME(), '$inputEstrellas', '$inputComentarios', '$inputTelefono', '$router_id', '$parque')";
         $result = mysqli_query($connection, $query);
 
         if ($result) {
 
+            // header('Location: ' . $linkloginonly . '?dst=' . $linkorigesc . '&username=T-' . $mac);
 
-            header('Location: ' . $linkloginonly . '?dst=' . $linkorigesc . '&username=T-' . $mac);
+            $insertQuery = "INSERT INTO `cliente_login` (fechayhora, fecha, hora, celular, router_id, parque, macequipo, ipequipo) VALUES(CURRENT_TIMESTAMP(), CURDATE(), CURTIME(), '$phone', '$router_id', '$parque', '$macequipo', '$ipequipo')";
+            $result = mysqli_query($connection, $insertQuery);
             http_response_code(200);
             echo json_encode(array(
                 "msg" => "Tienes navegacion",
-                "code" => 200
+                "code" => 200,
+                "link" => $linkloginonly . '?dst=' . $linkorigesc . '&username=T-' . $mac
             ));
             die();
         } else {
             http_response_code(500);
             echo json_encode(array(
-                "msg" => "Ah ocurrido un error",
+                "msg" => "Ha Ocurrido Un Error, al insertar informacion",
                 "code" => 500
             ));
 
@@ -42,7 +45,7 @@ if (isset($_POST['messageFormSurvie'])) {
     } catch (\Throwable $th) {
         http_response_code(500);
         echo json_encode(array(
-            "msg" => "Ah ocurrido un error",
+            "msg" => "Ha Ocurrido Un Error",
             "code" => 500
         ));
 
@@ -51,7 +54,7 @@ if (isset($_POST['messageFormSurvie'])) {
 } else {
     http_response_code(500);
     echo json_encode(array(
-        "msg" => "Ah ocurrido un error, toda la informacion es requerida",
+        "msg" => "Ha Ocurrido Un Error, Toda La Informacion Es Requerida",
         "code" => 500
     ));
 

@@ -2,6 +2,26 @@
 
 include('conexion.php');
 
+if(isset($_GET['inicialQuery'])){
+
+    $macequipo = $_COOKIE['mac'];
+
+    $query = "SELECT macequipo as Contador FROM cliente_login WHERE macequipo=$macequipo AND (TIMESTAMPDIFF(HOUR, (SELECT MAX(FechaYHora) FROM cliente_login WHERE macequipo=$macequipo),CURRENT_TIMESTAMP()))>24";
+    $response = mysqli_query($connection, $query);
+
+    if (is_null($response)) {
+        http_response_code(200);
+        echo json_encode(array(
+            "status" => 200
+        ));
+    } else {
+        http_response_code(500);
+        echo json_encode(array(
+            "status" => 500
+        ));
+    }
+}
+
 
 if (isset($_POST['inputTelefono'])) {
 
@@ -15,16 +35,13 @@ if (isset($_POST['inputTelefono'])) {
     $query = "SELECT * FROM cliente WHERE celular = $phone";
     $response = mysqli_query($connection, $query);
 
-    if ($response->num_rows != 0) {
-
+    if ($response->num_rows > 0) {
         try {
-            $insertQuery = "INSERT INTO `cliente_login` (fecha, hora, celular, router_id, parque, macequipo, ipequipo) VALUES(CURDATE(), CURTIME(), '$phone', '$router_id', '$parque', '$macequipo', '$ipequipo')";
-            $result = mysqli_query($connection, $insertQuery);
-
+        
             if ($result) {
                 http_response_code(200);
                 echo json_encode(array(
-                    "msg" => "Ha sido insertada la informacion",
+                    "msg" => "Ha Sido Insertada La Informacion",
                     "code" => 200
                 ));
 
@@ -32,7 +49,7 @@ if (isset($_POST['inputTelefono'])) {
             } else {
                 http_response_code(500);
                 echo json_encode(array(
-                    "msg" => "Ah ocurrido un error al ingresar informacion a la base de datos",
+                    "msg" => "Ha Ocurrido Un Error Al Ingresar Informacion A La Base De Datos",
                     "code" => 500
                 ));
 
@@ -42,7 +59,7 @@ if (isset($_POST['inputTelefono'])) {
 
             http_response_code(500);
             echo json_encode(array(
-                "msg" => "Ah ocurrido un error al ingresar informacion a la base de datos",
+                "msg" => "Ha Ocurrido Un Error Al Ingresar Informacion A La Base De Datos",
                 "code" => 500
             ));
             die();
@@ -50,8 +67,9 @@ if (isset($_POST['inputTelefono'])) {
     } else {
         http_response_code(404);
         echo json_encode(array(
-            "msg" => "El numero de telefono no ha sido encontrado",
-            "code" => 404
+            "msg" => "El Numero De Telefono No Ha Sido Encontrado",
+            "code" => 404,
+            "phone" => $_POST['inputTelefono']
         ));
 
         die();
@@ -59,7 +77,7 @@ if (isset($_POST['inputTelefono'])) {
 } else {
     http_response_code(500);
     echo json_encode(array(
-        "msg" => "Ah ocurrido un error, el numero de telefono es necesario",
+        "msg" => "Ha Ocurrido Un Error, El Numero De Telefono Es Necesario",
         "code" => 500
     ));
 

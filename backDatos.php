@@ -19,8 +19,7 @@ if ((isset($_POST['nameFormData']) && !empty($_POST['nameFormData'])) && (isset(
     $edad = filter_var($_POST['ageFormData'], FILTER_SANITIZE_STRING);
     $sexo = filter_var($_POST['sexFormData'], FILTER_SANITIZE_STRING);
     $telefono = filter_var($_POST['phoneFormData'], FILTER_SANITIZE_STRING);
-    $tyc = $_POST['tycFormData'];
-
+    
     if (filter_var($sanitazeEmail, FILTER_VALIDATE_EMAIL)) {
 
         try {
@@ -29,20 +28,22 @@ if ((isset($_POST['nameFormData']) && !empty($_POST['nameFormData'])) && (isset(
 
             if ($result) {
 
-                $insertQuery = "INSERT INTO `cliente_login` (fecha, hora, celular, router_id, parque, macequipo, ipequipo) VALUES(CURDATE(), CURTIME(), '$telefono', '$rid', '$parque', '$mac', '$ip')";
+                $insertQuery = "INSERT INTO `cliente_login` (fechayhora, fecha, hora, celular, router_id, parque, macequipo, ipequipo) VALUES(CURRENT_TIMESTAMP(),CURDATE(), CURTIME(), '$telefono', '$rid', '$parque', '$mac', '$ip')";
                 $result = mysqli_query($connection, $insertQuery);
 
-                header('Location: ' . $linkloginonly . '?dst=' . $linkorigesc . '&username=T-' . $mac);
+                // header('Location: ' . $linkloginonly . '?dst=' . $linkorigesc . '&username=T-' . $mac);
+
                 http_response_code(200);
                 echo json_encode(array(
-                    "msg" => "La informacion ha sido insertada",
-                    "code" => 200
+                    "msg" => "Proceso Completado",
+                    "code" => 200,
+                    "link" => $linkloginonly . '?dst=' . $linkorigesc . '&username=T-' . $mac
                 ));
                 die();
             } else {
                 http_response_code(500);
                 echo json_encode(array(
-                    "msg" => "Ah ocurrido un error, validar la informacion",
+                    "msg" => "Ha Ocurrido Un Error, No Se Guardo La Informacion",
                     "code" => 500
                 ));
                 die();
@@ -50,7 +51,7 @@ if ((isset($_POST['nameFormData']) && !empty($_POST['nameFormData'])) && (isset(
         } catch (\Throwable $th) {
             http_response_code(500);
             echo json_encode(array(
-                "msg" => "Ah ocurrido un error, validar la informacion",
+                "msg" => "Ha Ocurrido Un Error, Validar La Informacion",
                 "code" => 500
             ));
             die();
@@ -58,7 +59,7 @@ if ((isset($_POST['nameFormData']) && !empty($_POST['nameFormData'])) && (isset(
     } else {
         http_response_code(500);
         echo json_encode(array(
-            "msg" => "Ah ocurrido un error, Debe ser un email valido",
+            "msg" => "Ha Ocurrido Un Error, Debe Ser Un Email Valido",
             "code" => 500
         ));
         die();
@@ -67,7 +68,7 @@ if ((isset($_POST['nameFormData']) && !empty($_POST['nameFormData'])) && (isset(
 
     http_response_code(500);
     echo json_encode(array(
-        "msg" => "Ah ocurrido un error, toda la informacion es requerida",
+        "msg" => "Ha Ocurrido Un Error, Toda La Informacion Es Requerida",
         "code" => 500
     ));
 
