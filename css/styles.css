@@ -1,0 +1,166 @@
+html {
+  box-sizing: border-box;
+  
+}
+
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/*  */body{
+  height: 100vh;
+}
+
+img {
+  max-width: 100%;
+}
+
+.contenedor {
+  width: 95%;
+  max-width: 150rem;
+  margin: 0 auto;
+}
+
+
+@media (max-width: 768px) {
+
+  .contenedor {
+    width: 95%;
+  }
+}
+
+.logo{
+width: 400px;
+height: 120px;
+margin-top: -23px;
+margin-left: -163px;
+left: 46%;
+top:10%;
+position: absolute;
+}
+
+header{
+  margin-top: 180px;
+}
+
+@media (max-width: 768px) {
+
+  header {
+    margin-top: 300px;
+  }
+
+   #formulario {
+     margin-top: 70px;
+     margin-bottom: 30px;
+   }
+
+   #formularioTelefono{
+     margin-top: 70px;
+     margin-bottom: 30px;
+   }
+
+  .logo{
+    top: 9%;
+    width: 310px;
+    height: 110px;
+  }
+
+}
+
+.form-contact {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-contact .form-contact-heading,
+.form-contact .checkbox {
+  margin-bottom: 10px;
+}
+.form-contact .checkbox {
+  font-weight: normal;
+}
+.form-contact .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-contact .form-control:focus {
+  z-index: 2;
+}
+.form-contact input, textarea, button {
+  margin: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
+.formulario-contacto{
+  min-height: 100vhs;
+}
+
+
+@media (max-width: 768px) {
+
+  #formulario {
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+}
+
+.parrafo{
+ font-size: 19px;
+}
+
+.separacion-logo {padding-top: 40px;}
+
+.center-radio {
+  display:flex;
+justify-content: center;
+}
+
+
+#form p {
+  text-align: center;
+}
+
+#form label {
+  font-size: 50px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color:  rgb(0, 176, 0);
+}
+
+input[type="radio"]:checked ~ label {
+  color: rgb(0, 176, 0);
+}
+
+
+.label-comentario{
+  color: black
+}
+.label-comentario:hover{
+  color: black
+}
