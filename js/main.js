@@ -1,23 +1,40 @@
+let pagina = location.pathname.replace("/proyectoHotspot/", "");
 
-  let pagina = location.pathname.replace('/proyectoHotspot/',"")
-
-  if (pagina == 'telefono.php') {
-    const consultaInicial = async () => {
-    
-    let consulta = await fetch('backTelefono.php?inicialQuery=yes')
-      console.log(consulta);
-    if(consulta.status == 500){
-      location.href = "http://192.168.25.190/proyectoHotspot/calificacion.php"
+if (pagina == "telefono.php") {
+  const consultaInicial = async () => {
+    let consulta = await fetch("backTelefono.php?inicialQuery=yes");
+    console.log(consulta);
+    if (consulta.status == 500) {
+      location.href = "http://18.216.92.56/proyectoHotSpot/calificacion.php";
     }
-  }
-  consultaInicial()
+  };
+  consultaInicial();
 }
-  
-  
-
 
 (function () {
   document.addEventListener("DOMContentLoaded", () => {
+    // funcion quitar el modal
+    if (document.querySelector("#closeModal")) {
+      document.querySelector("#closeModal").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        $("#staticBackdrop").modal("hide");
+      });
+    }
+
+    // funcion para mostrar el modal
+    const showModal = (content, result) => {
+      if (result == "error") {
+        document.querySelector("#modalContent").classList.add("border");
+        document.querySelector("#modalContent").classList.add("border-danger");
+      } else {
+        document.querySelector("#modalContent").classList.add("border");
+        document.querySelector("#modalContent").classList.add("border-success");
+      }
+      document.querySelector("#modalInfo").innerHTML = `<p>${content}</p>`;
+      $("#staticBackdrop").modal("show");
+    };
+
     // seccion telefono
     const sendInfoPhone = async (data, phone) => {
       let sendPhone = await fetch("backTelefono.php", {
@@ -34,7 +51,7 @@
         if (responseError.code == 404) {
           location.href = `http://192.168.25.190/proyectoHotspot/datos.php?phone=${phone}`;
         } else {
-          alert(responseError.msg);
+          showModal(responseError.msg, "error");
         }
       }
     };
@@ -48,7 +65,7 @@
         const expresion = /^3[\d]{9}$/;
 
         if (!expresion.test(telefonoFormPhone)) {
-          alert("El numero es incorrecto, por favor validar");
+          showModal("El numero es incorrecto, por favor validar", "error");
         } else {
           const formDataPhone = new FormData();
           formDataPhone.set("inputTelefono", telefonoFormPhone);
@@ -67,11 +84,11 @@
       if (sendData.ok) {
         let responseData = await sendData.json();
 
-        location.href = responseData.link
+        location.href = responseData.link;
       } else {
-        let responseData = await sendData.text();
+        let responseData = await sendData.json();
 
-        alert(responseData);
+        showModal(responseData.msg, "error");
       }
     };
 
@@ -111,7 +128,7 @@
           !ageFormData.length ||
           !sexFormData.length
         ) {
-          alert("Por favor validar la informacion");
+          showModal("Por favor validar la informacion", "error");
         } else {
           const sendInfoDataForm = new FormData();
           sendInfoDataForm.set("nameFormData", nameFormData);
@@ -138,10 +155,10 @@
       if (sendPhone.ok) {
         let responsePhone = await sendPhone.json();
 
-        location.href = responsePhone.link
+        location.href = responsePhone.link;
       } else {
         let responseError = await sendPhone.json();
-        alert(responseError.msg);
+        showModal(responseError.msg, "error");
       }
     };
 
@@ -164,7 +181,7 @@
         const expresionString = /^[a-z\d\-_\s]+$/i;
 
         if (!expresionString.test(messageFormSurvie)) {
-          alert("Todos los campos deben ser rellenados");
+          showModal("Todos los campos deben ser rellenados", "error");
         } else {
           const formDataSurvie = new FormData();
           formDataSurvie.set("messageFormSurvie", messageFormSurvie);
